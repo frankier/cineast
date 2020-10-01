@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import static java.util.Collections.emptyList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.vitrivr.cineast.core.config.QueryConfig;
@@ -57,6 +58,9 @@ public class HandPoseEmbedding extends AbstractFeatureModule {
     PoseSpec poseSpec = this.getPoseSpec();
     List<float[]> allKps = PoseNormalize.procPoses(poseSpec, poses)
         .collect(Collectors.toList());
+    if (allKps.isEmpty()) {
+      return emptyList();
+    }
     if (this.isLeft) {
       for (float[] kps : allKps) {
         // Flip on x-axis

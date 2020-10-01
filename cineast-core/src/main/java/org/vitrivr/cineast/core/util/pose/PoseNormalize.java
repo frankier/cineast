@@ -46,9 +46,6 @@ public class PoseNormalize {
   }
 
   static public Optional<float[]> pipeline(PoseSpec spec, float[][] pose) {
-    if (!spec.hasAll(pose)) {
-      return Optional.empty();
-    }
     float[][] subsetPose = spec.subset(pose);
     PoseNormalize.minMaxScale(subsetPose);
     return Optional.of(PoseNormalize.flatten(subsetPose));
